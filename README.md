@@ -47,24 +47,15 @@ The script runs the following steps:
 
  2. The file is unzipped and the relevant files are imported into R.  
 
- 3. The 70% train data and 30% test data are merged to form one combined  table called dat1.
+ 3. The 70% train data and 30% test data are merged to form one combined table called dat1.
 
  4. Variable name were conformed to syntactically-correct names for ease of reading: capital letters were left in the variable names to help with readability since variable names can be long; special characters are replaced with periods.  An example for conforming logic applied to a variable name is "tBodyAcc-mean()-x" was changed to "tBodyAcc.mean...X".
     
- 5. Variable selection:  Only variable of mean or standard deviation were kept in the in the tidy data set.  The angle() variables were excluded from the data since they measure the angle rather than the movement.  The angle() variables that were excluded from the *tidy.txt* data are:
+ 5. Variable selection:  Only variable of mean or standard deviation were kept in the in the tidy data set.  The angle() variables were excluded from the data since they measure the angle rather than spatial movements.  
 
+ 6. The activity ids are compared against a reference mapping table in order translate the id values into meaningful activity labels.
 
-    * angle(tBodyAccMean,gravity)
-    * angle(tBodyAccJerkMean,gravityMean)
-    * angle(tBodyGyroMean,gravityMean)
-    * angle(tBodyGyroJerkMean,gravityMean)
-    * angle(X,gravityMean) 
-    * angle(Y, gravityMean)
-    * angle(Z, gravityMean)
-
- 6. The activity ids are compared against a reference mapping table in order translate the id values into meaningful labels.
-
- 7. The data was then summarized to an activity a subject level (i.e. the data table was reshaped).  Each column still represented a mean or standard deviation measure, but they are now summarized to an activity a subject level.
+ 7. The data was then summarized to an activity a subject level (i.e. the data table was reshaped).  Each column still represented a mean or standard deviation measure, each observation now represents the mean of a particular subject & activity combination.
 
  8. The output tidy file is exported as tidy.txt
 
