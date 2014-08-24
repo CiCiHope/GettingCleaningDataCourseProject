@@ -3,60 +3,77 @@ Getting & Cleaning Data: Course Project
 
 ###Introduction###
 
-This repo contains files for the Course Project for the *Getting & Cleaning Data* course at Coursera.  This ReadMe file explains how all of the files and scripts work and how they fit together.  
+This repo contains data & files for the Course Project for the *Getting & Cleaning Data* course at Coursera.  This ReadMe file explains how all of the data, files and scripts fit together.  
 
 ----------
 
 
 ###Contents of this repo###
 
- 1. ReadMe.md
- 2. Run_analysis.R
- 3. CodeBook.md
- 4. A tidy data set (?name)
+ - ReadMe.md
+ - Run_analysis.R
+ - CodeBook.md
+ - Tidy.txt
+ - UCI HAR Dataset
 
 The *ReadMe.Md* file describes the contents, the data, the data cleaning process and how they are all connected.  
 
 
-*Run_analysis.R* is the R script that:
-
-* Download and store the data
-* Merge the training and the test sets to create one data set
-* Extract only the measurements on the mean and standard deviation 
-* Uses descriptive activity names to name the activities in the data set
-* Labels the data set with syntactically-correct descriptive variable names
-* Create the tidy data set
+*Run_analysis.R* is the R script that is used on the raw data to produce the tidy data or tidy.txt.  A detail description of run_analysis.R is below.
 
 
 *CodeBook.md* is the code book provided to describe the variables.  Specifically, it shows the variables names, the variable field width, variable definition, and range of values.
 
 
-The tidy data set produced shows the averages of all mean and standard deviation variables for each activity and each subject.
+*Tidy.txt* is the tidy data set produced shows the averages of all mean and standard deviation variables for each activity and each subject.
+
+*UCI HAR Dataset* folder contains the raw data set used as well as detailed descriptions of the raw data.
 
 ----------
 
 ### Raw data set information###
 
-Data used in this analysis comes from the realm of wearing computing.  A more detailed description of the data is at: [http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones][1]
+Data used in this analysis comes from the realm of wearing computing.  A more detailed description of the data can be found [here][1].
 
-The raw contains 561 unlabeled variables for 7352 train observation 2947 test observations.  Features/values have been normalized and bounded within [-1,1].  The variables labels is in the *features.txt* file.  The 
+The raw data contains 561 unlabeled variables for 7352 train observations and 2947 test observations.  All features/values have been normalized and bounded within [-1,1].  The variables labels is in the *features.txt* file.  The activities are in the train.y and test.y files.  The activity mapping table is the activity_label file.
 
 
 ----------
-### Data Cleaning Process ###
+### Run_analysis.R script information###
 
- 1. The data was downloaded from [http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones][2]  as a zip file.  The file was subsequently unzipped to reveal that data located in a folder called *UCI HAR Dataset*.  
+The script runs the following steps:
 
- 2. The 70% train & the 30% test data sets were merged together to form one combined dataset. 
- 3. Variable name were conformed to syntactically-correct names for ease of reading.  Capital letters were left as it because it helps with readability.  An example for conforming a variable name is "tBodyAcc-mean()-x" was changed to "tBodyAcc.mean...X".  In specific, the naming convention applied were:
-       * "-" was changed to "."
-       * "(" was changed to "."
-       * ")" was changed to "."
-       * "," was changed to "."
+ 1. The script creates a temporary folder and downloads the zipped raw data file into the temporary folder.   
 
- 4. Variable selection:  Only variable of mean or standard deviation were kept in the in the tidy data set
- 5. The output tidy file is exported as a comma separate file 
+ 2. The file is unzipped and the relevant files are imported into R.  
 
+ 3. The 70% train data and 30% test data are merged to form one combined  table called dat1.
+
+ 4. Variable name were conformed to syntactically-correct names for ease of reading: capital letters were left in the variable names to help with readability since variable names can be long; special characters are replaced with periods.  An example for conforming logic applied to a variable name is "tBodyAcc-mean()-x" was changed to "tBodyAcc.mean...X".
+    
+ 5. Variable selection:  Only variable of mean or standard deviation were kept in the in the tidy data set.  The angle() variables were excluded from the data since they measure the angle rather than the movement.  The angle() variables that were excluded from the *tidy.txt* data are:
+
+
+    * angle(tBodyAccMean,gravity)
+    * angle(tBodyAccJerkMean,gravityMean)
+    * angle(tBodyGyroMean,gravityMean)
+    * angle(tBodyGyroJerkMean,gravityMean)
+    * angle(X,gravityMean) 
+    * angle(Y, gravityMean)
+    * angle(Z, gravityMean)
+
+ 6. The activity ids are compared against a reference mapping table in order translate the id values into meaningful labels.
+
+ 7. The data was then summarized to an activity a subject level (i.e. the data table was reshaped).  Each column still represented a mean or standard deviation measure, but they are now summarized to an activity a subject level.
+
+ 8. The output tidy file is exported as tidy.txt
+
+
+----------
+###Assumptions###
+
+ * All columns representing means contain ...mean() in them.
+ * All columns representing standard deviations contain ...std() in them.
+ * The run_analysis.R file requires the plyr package to be installed on the user's machine.
 
   [1]: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
-  [2]: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
