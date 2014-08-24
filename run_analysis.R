@@ -74,6 +74,6 @@ agg <- suppressWarnings (aggregate(tidydat.1, by=list(subject = tidydat.1$subjec
 # Produce second, independent tidy data set with the average of each variable for each 
 # activity and each subject
 
-tidydat.2 <- agg[,-c(3:5)]
+tidydat.2 <- agg[,-c(3:4)]
 
 write.table(tidydat.2, file="./Coursera/03 Getting and Cleaning Data/Course Project/GettingCleaningDataCourseProject/tidy.txt",sep="\t",row.name=FALSE)

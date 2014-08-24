@@ -51,13 +51,16 @@ The script runs the following steps:
 
  4. Variable name were conformed to syntactically-correct names for ease of reading: capital letters were left in the variable names to help with readability since variable names can be long; special characters are replaced with periods.  An example for conforming logic applied to a variable name is "tBodyAcc-mean()-x" was changed to "tBodyAcc.mean...X".
     
- 5. Variable selection:  Only variable of mean or standard deviation were kept in the in the tidy data set.  The angle() variables were excluded from the data since they measure the angle rather than spatial movements.  
+ 5. Variable selection:  Only variables of mean or standard deviation were kept in the in the tidy data set.  Any angle() variable was excluded from the tidy data set because they measure the angle between two designated values rather than spatial movements.  
 
- 6. The activity ids are compared against a reference mapping table in order translate the id values into meaningful activity labels.
+ 6. Subject id's were added.
+ 
+ 7. The activity id's are compared against a reference mapping table in order translate the id values into meaningful activity labels.  For example, any record with activity ID 1 was mapped to the activity label of walking.
 
- 7. The data was then summarized to an activity a subject level (i.e. the data table was reshaped).  Each column still represented a mean or standard deviation measure, each observation now represents the mean of a particular subject & activity combination.
+ 8. The data was then summarized to an activity a subject level (i.e. the data table was reshaped).  Specifically, each column still represents a mean or standard deviation measure, each observation now represents the mean of a particular subject & activity combination.
 
- 8. The output tidy file is exported as tidy.txt
+
+ 9. The output tidy file is exported as tidy.txt
 
 
 ----------
